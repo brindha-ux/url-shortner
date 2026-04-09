@@ -3,229 +3,235 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinkX - URL Shortener</title>
+<title>LinkX Ultra</title>
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    cursor: none;
 }
 
 body {
-    background: #0f0f0f;
+    background: #000;
     color: white;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
-/* Navbar */
+/* PARTICLES */
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+/* CURSOR GLOW */
+.cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ff2e63;
+    pointer-events: none;
+    box-shadow: 0 0 20px #ff2e63;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+/* NAV */
 nav {
     display: flex;
     justify-content: space-between;
-    padding: 20px 50px;
-    background: #111;
+    padding: 20px 60px;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: 600;
-    color: #ff3c3c;
+    font-family: 'Orbitron';
+    color: #ff2e63;
 }
 
-nav ul {
-    display: flex;
-    list-style: none;
-    gap: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: white;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: #ff3c3c;
-}
-
-/* Hero */
+/* HERO */
 .hero {
-    text-align: center;
-    padding: 80px 20px;
-}
-
-.hero h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.hero p {
-    color: #aaa;
-    margin-bottom: 30px;
-}
-
-/* Input Box */
-.input-box {
+    height: 100vh;
     display: flex;
     justify-content: center;
-    gap: 10px;
-}
-
-input {
-    padding: 12px;
-    width: 300px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
-button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(45deg, #ff3c3c, #ff6a6a);
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.05);
-}
-
-/* Result */
-.result {
-    margin-top: 30px;
-    display: none;
-}
-
-.result-box {
-    background: #1a1a1a;
-    padding: 15px;
-    border-radius: 10px;
-    display: inline-flex;
-    gap: 10px;
     align-items: center;
 }
 
-/* Features */
-.features {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 50px 20px;
-    flex-wrap: wrap;
-}
-
+/* CARD */
 .card {
+    width: 420px;
+    padding: 40px;
+    border-radius: 20px;
     background: rgba(255,255,255,0.05);
-    padding: 20px;
-    border-radius: 15px;
-    width: 250px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 40px rgba(255,0,100,0.3);
     text-align: center;
-    transition: 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-10px);
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: white;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #111;
-    margin-top: 50px;
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(45deg,#ff2e63,#ff6a00);
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+/* MAGNETIC EFFECT */
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff2e63;
+}
+
+/* RESULT */
+.result {
+    margin-top: 20px;
+    display: none;
+}
+
+.result a {
+    color: #00ffcc;
+}
+
+/* SUGGESTIONS */
+.suggestions {
+    font-size: 12px;
     color: #aaa;
+    margin-top: 5px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Navbar -->
+<canvas id="bg"></canvas>
+<div class="cursor" id="cursor"></div>
+
 <nav>
-    <div class="logo">LinkX</div>
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Features</a></li>
-        <li><a href="#">Login</a></li>
-    </ul>
+    <div class="logo">LinkX Ultra</div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
-    <h1>Shorten Your Links Instantly</h1>
-    <p>Fast, simple, and secure URL shortening</p>
+    <div class="card">
+        <h2>🚀 Smart URL Shortener</h2>
 
-    <div class="input-box">
-        <input type="text" id="urlInput" placeholder="Enter your URL here">
-        <button onclick="shortenURL()">Shorten</button>
-    </div>
+        <input type="text" id="urlInput" placeholder="Paste URL...">
+        <div class="suggestions" id="suggestions"></div>
 
-    <div class="result" id="result">
-        <div class="result-box">
-            <span id="shortLink"></span>
-            <button onclick="copyLink()">Copy</button>
+        <button id="shortBtn">Generate Link</button>
+
+        <div class="result" id="result">
+            <p>Short Link:</p>
+            <a id="shortLink" href="#" target="_blank"></a>
         </div>
     </div>
 </section>
 
-<!-- Features -->
-<section class="features">
-    <div class="card">
-        <h3>⚡ Fast</h3>
-        <p>Instant link shortening</p>
-    </div>
-    <div class="card">
-        <h3>🔒 Secure</h3>
-        <p>Safe and reliable links</p>
-    </div>
-    <div class="card">
-        <h3>📊 Analytics</h3>
-        <p>Track your clicks</p>
-    </div>
-</section>
-
-<!-- Footer -->
-<footer>
-    <p>© 2026 LinkX | Built by You 🚀</p>
-</footer>
-
 <script>
-async function shortenURL() {
-    const input = document.getElementById("urlInput").value;
+/* PARTICLES BACKGROUND */
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+for(let i=0;i<80;i++){
+    particles.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        r: Math.random()*2,
+        dx: Math.random()*0.5,
+        dy: Math.random()*0.5
+    });
+}
+
+function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#ff2e63";
+    particles.forEach(p=>{
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fill();
+
+        p.x+=p.dx;
+        p.y+=p.dy;
+
+        if(p.x>canvas.width) p.x=0;
+        if(p.y>canvas.height) p.y=0;
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+
+/* CURSOR */
+const cursor = document.getElementById("cursor");
+document.addEventListener("mousemove", e=>{
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+});
+
+/* SMART SUGGESTIONS */
+const input = document.getElementById("urlInput");
+const suggest = document.getElementById("suggestions");
+
+input.addEventListener("input", ()=>{
+    if(input.value.includes("youtube")){
+        suggest.innerText="💡 Tip: Short YouTube links for sharing videos!";
+    } else if(input.value.includes("instagram")){
+        suggest.innerText="💡 Tip: Perfect for bio links!";
+    } else {
+        suggest.innerText="";
+    }
+});
+
+/* SHORTENER (FIXED) */
+document.getElementById("shortBtn").addEventListener("click", async ()=>{
+    const url = input.value.trim();
     const resultDiv = document.getElementById("result");
     const shortLink = document.getElementById("shortLink");
 
-    if (!input) {
-        alert("Please enter a URL");
+    if(!url){
+        alert("Enter URL");
         return;
     }
 
     try {
-        const res = await fetch(`https://api.shrtco.de/v2/shorten?url=${input}`);
+        const res = await fetch("https://api.shrtco.de/v2/shorten?url=" + encodeURIComponent(url));
         const data = await res.json();
 
-        if (data.ok) {
-            shortLink.innerText = data.result.full_short_link;
+        if(data.ok){
+            const link = data.result.full_short_link;
+            shortLink.href = link;
+            shortLink.innerText = link;
             resultDiv.style.display = "block";
         } else {
             alert("Invalid URL");
         }
-    } catch (error) {
-        alert("Something went wrong!");
+    } catch(e){
+        alert("API error");
     }
-}
-
-function copyLink() {
-    const text = document.getElementById("shortLink").innerText;
-    navigator.clipboard.writeText(text);
-    alert("Copied!");
-}
+});
 </script>
 
 </body>
