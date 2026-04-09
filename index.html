@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinkX Ultra</title>
+<title>LinkX Purple</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
 
@@ -12,14 +12,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none;
 }
 
 body {
-    background: #000;
+    background: #0a0014;
     color: white;
     font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
 }
 
 /* PARTICLES */
@@ -28,19 +26,6 @@ canvas {
     top: 0;
     left: 0;
     z-index: -1;
-}
-
-/* CURSOR GLOW */
-.cursor {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #ff2e63;
-    pointer-events: none;
-    box-shadow: 0 0 20px #ff2e63;
-    transform: translate(-50%, -50%);
-    z-index: 999;
 }
 
 /* NAV */
@@ -52,26 +37,25 @@ nav {
 
 .logo {
     font-family: 'Orbitron';
-    color: #ff2e63;
+    color: #c084fc;
+    font-size: 22px;
 }
 
 /* HERO */
 .hero {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 60px 20px;
+    text-align: center;
 }
 
 /* CARD */
 .card {
-    width: 420px;
-    padding: 40px;
+    max-width: 420px;
+    margin: 30px auto;
+    padding: 30px;
     border-radius: 20px;
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 40px rgba(255,0,100,0.3);
-    text-align: center;
+    box-shadow: 0 0 40px rgba(168,85,247,0.3);
 }
 
 /* INPUT */
@@ -91,16 +75,16 @@ button {
     padding: 12px;
     border-radius: 10px;
     border: none;
-    background: linear-gradient(45deg,#ff2e63,#ff6a00);
+    background: linear-gradient(45deg,#a855f7,#9333ea);
     color: white;
     font-weight: bold;
-    transition: 0.2s;
+    transition: 0.3s;
+    cursor: pointer;
 }
 
-/* MAGNETIC EFFECT */
 button:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 20px #ff2e63;
+    box-shadow: 0 0 20px #a855f7;
 }
 
 /* RESULT */
@@ -110,14 +94,66 @@ button:hover {
 }
 
 .result a {
-    color: #00ffcc;
+    color: #d8b4fe;
+    word-break: break-all;
 }
 
-/* SUGGESTIONS */
-.suggestions {
-    font-size: 12px;
-    color: #aaa;
-    margin-top: 5px;
+/* COPY BUTTON */
+.copy-btn {
+    margin-top: 10px;
+    background: #6d28d9;
+}
+
+/* FEATURES */
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 40px;
+    flex-wrap: wrap;
+}
+
+.feature {
+    width: 250px;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255,255,255,0.05);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px #a855f7;
+}
+
+/* USAGE */
+.usage {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.step {
+    margin: 10px 0;
+    color: #ccc;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+}
+
+/* TOAST */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #9333ea;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: none;
 }
 </style>
 </head>
@@ -125,30 +161,57 @@ button:hover {
 <body>
 
 <canvas id="bg"></canvas>
-<div class="cursor" id="cursor"></div>
 
 <nav>
-    <div class="logo">LinkX Ultra</div>
+    <div class="logo">LinkX Purple</div>
 </nav>
 
 <section class="hero">
+    <h1>Smart URL Shortener</h1>
+    <p>Transform long links into clean, shareable URLs instantly.</p>
+
     <div class="card">
-        <h2>🚀 Smart URL Shortener</h2>
-
-        <input type="text" id="urlInput" placeholder="Paste URL...">
-        <div class="suggestions" id="suggestions"></div>
-
-        <button id="shortBtn">Generate Link</button>
+        <input type="text" id="urlInput" placeholder="Paste your URL here">
+        <button onclick="shortenURL()">Generate Link</button>
 
         <div class="result" id="result">
             <p>Short Link:</p>
-            <a id="shortLink" href="#" target="_blank"></a>
+            <a id="shortLink" target="_blank"></a>
+            <button class="copy-btn" onclick="copyLink()">Copy Link</button>
         </div>
     </div>
 </section>
 
+<section class="features">
+    <div class="feature">
+        <h3>⚡ Fast</h3>
+        <p>Instant link generation with zero delay.</p>
+    </div>
+    <div class="feature">
+        <h3>🔒 Secure</h3>
+        <p>Your links are safe and reliable.</p>
+    </div>
+    <div class="feature">
+        <h3>🌐 Shareable</h3>
+        <p>Perfect for social media & projects.</p>
+    </div>
+</section>
+
+<section class="usage">
+    <h2>How to Use</h2>
+    <p class="step">1. Paste your long URL</p>
+    <p class="step">2. Click "Generate Link"</p>
+    <p class="step">3. Copy & share your short URL</p>
+</section>
+
+<footer>
+    <p>© 2026 LinkX Purple | Built for modern web</p>
+</footer>
+
+<div class="toast" id="toast">Copied!</div>
+
 <script>
-/* PARTICLES BACKGROUND */
+/* PARTICLES */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -156,7 +219,8 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 let particles = [];
-for(let i=0;i<80;i++){
+
+for (let i = 0; i < 80; i++) {
     particles.push({
         x: Math.random()*canvas.width,
         y: Math.random()*canvas.height,
@@ -168,7 +232,8 @@ for(let i=0;i<80;i++){
 
 function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="#ff2e63";
+    ctx.fillStyle="#a855f7";
+
     particles.forEach(p=>{
         ctx.beginPath();
         ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
@@ -180,34 +245,14 @@ function animate(){
         if(p.x>canvas.width) p.x=0;
         if(p.y>canvas.height) p.y=0;
     });
+
     requestAnimationFrame(animate);
 }
 animate();
 
-/* CURSOR */
-const cursor = document.getElementById("cursor");
-document.addEventListener("mousemove", e=>{
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-});
-
-/* SMART SUGGESTIONS */
-const input = document.getElementById("urlInput");
-const suggest = document.getElementById("suggestions");
-
-input.addEventListener("input", ()=>{
-    if(input.value.includes("youtube")){
-        suggest.innerText="💡 Tip: Short YouTube links for sharing videos!";
-    } else if(input.value.includes("instagram")){
-        suggest.innerText="💡 Tip: Perfect for bio links!";
-    } else {
-        suggest.innerText="";
-    }
-});
-
-/* SHORTENER (FIXED) */
-document.getElementById("shortBtn").addEventListener("click", async ()=>{
-    const url = input.value.trim();
+/* SHORTENER */
+async function shortenURL(){
+    const url = document.getElementById("urlInput").value.trim();
     const resultDiv = document.getElementById("result");
     const shortLink = document.getElementById("shortLink");
 
@@ -217,21 +262,30 @@ document.getElementById("shortBtn").addEventListener("click", async ()=>{
     }
 
     try {
-        const res = await fetch("https://api.shrtco.de/v2/shorten?url=" + encodeURIComponent(url));
-        const data = await res.json();
+        const res = await fetch("https://tinyurl.com/api-create.php?url=" + encodeURIComponent(url));
+        const data = await res.text();
 
-        if(data.ok){
-            const link = data.result.full_short_link;
-            shortLink.href = link;
-            shortLink.innerText = link;
-            resultDiv.style.display = "block";
-        } else {
-            alert("Invalid URL");
-        }
-    } catch(e){
-        alert("API error");
+        shortLink.href = data;
+        shortLink.innerText = data;
+        resultDiv.style.display = "block";
+
+    } catch {
+        alert("Error");
     }
-});
+}
+
+/* COPY */
+function copyLink(){
+    const text = document.getElementById("shortLink").innerText;
+    navigator.clipboard.writeText(text);
+
+    const toast = document.getElementById("toast");
+    toast.style.display = "block";
+
+    setTimeout(()=>{
+        toast.style.display = "none";
+    },2000);
+}
 </script>
 
 </body>
